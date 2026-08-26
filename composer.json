@@ -1,0 +1,44 @@
+{
+    "name": "survos/grist-bundle",
+    "description": "Grist forms and agent tools for Symfony.",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^8.5",
+        "survos/kit-bundle": "^2.6",
+        "survos/record-store-bundle": "^2.6",
+        "symfony/config": "^8.1",
+        "symfony/console": "^8.1",
+        "symfony/dependency-injection": "^8.1",
+        "symfony/http-kernel": "^8.1"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^13.0",
+        "symfony/ai-agent": "^0.4",
+        "symfony/mcp-bundle": "^0.9"
+    },
+    "suggest": {
+        "symfony/ai-agent": "Expose Grist agent tools.",
+        "symfony/mcp-bundle": "Expose Grist tools over MCP."
+    },
+    "autoload": {
+        "psr-4": {
+            "Survos\\GristBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Survos\\GristBundle\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "symfony": {
+            "require": "^8.1"
+        }
+    },
+    "prefer-stable": true,
+    "scripts": {
+        "test": "phpunit -c phpunit.xml.dist"
+    }
+}

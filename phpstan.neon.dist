@@ -1,0 +1,9 @@
+parameters:
+    level: 5
+    paths:
+        - src
+    # The mono root autoloader does not map every sibling bundle's namespace, so
+    # without this phpstan reports the whole record-store surface as class.notFound.
+    # tests/bootstrap.php maps them; reuse it rather than duplicating the paths.
+    bootstrapFiles:
+        - tests/bootstrap.php

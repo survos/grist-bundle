@@ -1,0 +1,70 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Survos\GristBundle;
+
+use Survos\GristBundle\Service\GristApplicationLocator;
+use Survos\GristBundle\Service\GristAttachmentManager;
+use Survos\GristBundle\Service\GristFormManager;
+use Survos\GristBundle\Service\GristQueryRunner;
+use Survos\GristBundle\Service\GristSchemaManager;
+use Survos\GristBundle\Service\GristWebhookManager;
+use Survos\GristBundle\Tool\AddColumnsTool;
+use Survos\GristBundle\Tool\AttachmentStoreTool;
+use Survos\GristBundle\Tool\DescribeTableTool;
+use Survos\GristBundle\Tool\ListApplicationsTool;
+use Survos\GristBundle\Tool\ListFormsTool;
+use Survos\GristBundle\Tool\ListWebhooksTool;
+use Survos\GristBundle\Tool\SqlTool;
+use Survos\GristBundle\Tool\UpsertFormTool;
+use Survos\GristBundle\Tool\UpsertRecordsTool;
+use Survos\GristBundle\Tool\UpsertWebhookTool;
+use Survos\Kit\AbstractSurvosBundle;
+use Survos\Kit\SurvosKitBundle;
+use Survos\RecordStoreBundle\SurvosRecordStoreBundle;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Kernel\RequiredBundle;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+#[RequiredBundle(SurvosKitBundle::class)]
+#[RequiredBundle(SurvosRecordStoreBundle::class)]
+// Symfony\Component\HttpKernel\Bundle\Bundle <-- Flex auto-registration marker (see Survos\Kit\AbstractSurvosBundle)
+final class SurvosGristBundle extends AbstractSurvosBundle
+{
+    /** @param array<string,mixed> $config */
+    public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+    {
+        parent::loadExtension($config, $container, $builder);
+        $s = $container->services()->defaults()->autowire()->autoconfigure();
+        $s->set(GristApplicationLocator::class)->public();
+        $s->set(GristFormManager::class)->public();
+        $s->set(GristSchemaManager::class)->public();
+        $s->set(GristQueryRunner::class)->public();
+        $s->set(GristWebhookManager::class)->public();
+        $s->set(GristAttachmentManager::class)->public();
+
+        // The tools are the agent/MCP surface. They are thin wrappers over the
+        // services above, so an app that only wants the services does not have to
+        // pull in symfony/ai-agent or mcp/sdk -- register them only if both are
+        // installed, matching the "suggest" entries in composer.json.
+        if (!class_exists(\Symfony\AI\Agent\Toolbox\Attribute\AsTool::class) || !class_exists(\Mcp\Capability\Attribute\McpTool::class)) {
+            return;
+        }
+
+        foreach ([
+            ListApplicationsTool::class,
+            DescribeTableTool::class,
+            SqlTool::class,
+            AddColumnsTool::class,
+            AttachmentStoreTool::class,
+            UpsertRecordsTool::class,
+            ListFormsTool::class,
+            UpsertFormTool::class,
+            ListWebhooksTool::class,
+            UpsertWebhookTool::class,
+        ] as $tool) {
+            $s->set($tool)->public();
+        }
+    }
+}
