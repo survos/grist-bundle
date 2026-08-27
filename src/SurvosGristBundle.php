@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Survos\GristBundle;
 
+use Survos\Grist\Adapter\GristAdapterFactory;
 use Survos\Grist\Service\GristApplicationLocator;
 use Survos\Grist\Service\GristAttachmentManager;
 use Survos\Grist\Service\GristFormManager;
@@ -22,10 +23,12 @@ use Survos\GristBundle\Tool\UpsertRecordsTool;
 use Survos\GristBundle\Tool\UpsertWebhookTool;
 use Survos\Kit\AbstractSurvosBundle;
 use Survos\Kit\SurvosKitBundle;
-use Survos\RecordStore\SurvosRecordStoreBundle;
+use Survos\RecordStoreBundle\SurvosRecordStoreBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Kernel\RequiredBundle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 #[RequiredBundle(SurvosKitBundle::class)]
 #[RequiredBundle(SurvosRecordStoreBundle::class)]
@@ -37,6 +40,14 @@ final class SurvosGristBundle extends AbstractSurvosBundle
     {
         parent::loadExtension($config, $container, $builder);
         $s = $container->services()->defaults()->autowire()->autoconfigure();
+
+        // This bundle owns survos/grist-php, so it registers the Grist record-store adapter --
+        // the same way survos/quickbase-bundle registers the Quickbase one. record-store-bundle
+        // stays provider-agnostic and knows about neither.
+        $s->set(GristAdapterFactory::class)
+            ->arg('$http', service('http_client'))
+            ->tag('survos_record_store.adapter_factory');
+
         $s->set(GristApplicationLocator::class)->public();
         $s->set(GristFormManager::class)->public();
         $s->set(GristSchemaManager::class)->public();
