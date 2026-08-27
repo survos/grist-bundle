@@ -7,7 +7,7 @@ namespace Survos\GristBundle\Tests;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Survos\GristBundle\Model\WebhookBlueprint;
+use Survos\Grist\Model\WebhookBlueprint;
 
 #[CoversClass(WebhookBlueprint::class)]
 final class WebhookBlueprintTest extends TestCase

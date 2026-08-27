@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Survos\GristBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Survos\RecordStoreBundle\Registry\RecordStoreRegistry;
+use Survos\RecordStore\Registry\RecordStoreRegistry;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool('grist_list_applications', 'List the configured record-store applications and their tables. Call this first to discover the application name every other Grist tool needs.')]

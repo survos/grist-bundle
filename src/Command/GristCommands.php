@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Survos\GristBundle\Command;
 
-use Survos\GristBundle\Service\GristAttachmentManager;
-use Survos\GristBundle\Service\GristQueryRunner;
-use Survos\GristBundle\Service\GristSchemaManager;
-use Survos\GristBundle\Service\GristWebhookManager;
+use Survos\Grist\Service\GristAttachmentManager;
+use Survos\Grist\Service\GristQueryRunner;
+use Survos\Grist\Service\GristSchemaManager;
+use Survos\Grist\Service\GristWebhookManager;
 use Symfony\Component\Console\Attribute\Argument;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Attribute\Option;

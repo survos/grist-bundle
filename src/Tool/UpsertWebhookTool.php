@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Survos\GristBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Survos\GristBundle\Model\WebhookBlueprint;
-use Survos\GristBundle\Service\GristWebhookManager;
+use Survos\Grist\Model\WebhookBlueprint;
+use Survos\Grist\Service\GristWebhookManager;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool('grist_upsert_webhook', 'Create or update an outgoing Grist webhook, matched by name so it is safe to re-apply. Set watchedColIds to the columns a human edits so a callback writing derived columns back cannot re-trigger itself, and isReadyColumn to a boolean column so half-filled rows never fire.')]

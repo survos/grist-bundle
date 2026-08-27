@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Survos\GristBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Survos\GristBundle\Service\GristSchemaManager;
+use Survos\Grist\Service\GristSchemaManager;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool('grist_describe_table', 'Describe a Grist table: every column with its type, label, and formula. Use this before writing a query or a form so column ids and types are known rather than guessed.')]

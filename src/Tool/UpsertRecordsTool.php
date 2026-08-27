@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Survos\GristBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Survos\GristBundle\Service\GristApplicationLocator;
+use Survos\Grist\Service\GristApplicationLocator;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool('grist_upsert_records', 'Insert or update rows in a Grist table, matched on a natural key column rather than row id, so re-running the same call is idempotent.')]

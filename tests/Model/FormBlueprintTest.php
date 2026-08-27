@@ -6,7 +6,7 @@ namespace Survos\GristBundle\Tests\Model;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Survos\GristBundle\Model\FormBlueprint;
+use Survos\Grist\Model\FormBlueprint;
 
 final class FormBlueprintTest extends TestCase
 {

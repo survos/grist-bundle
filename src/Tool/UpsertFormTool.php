@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Survos\GristBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Survos\GristBundle\Model\FormBlueprint;
-use Survos\GristBundle\Service\GristFormManager;
+use Survos\Grist\Model\FormBlueprint;
+use Survos\Grist\Service\GristFormManager;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool('grist_upsert_form', 'Create or update a Grist form from an ordered field blueprint, optionally publishing it.')]

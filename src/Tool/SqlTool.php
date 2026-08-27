@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Survos\GristBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Survos\GristBundle\Service\GristQueryRunner;
+use Survos\Grist\Service\GristQueryRunner;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool('grist_sql', 'Run a read-only SELECT against a Grist document. A document is SQLite, so tables can be joined -- resolve Ref columns to their labels in one query instead of looking up row ids afterwards. Bind values with ? and the args array; never interpolate them.')]

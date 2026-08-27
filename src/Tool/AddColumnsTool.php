@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Survos\GristBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Survos\GristBundle\Service\GristSchemaManager;
+use Survos\Grist\Service\GristSchemaManager;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool('grist_add_columns', 'Add missing columns to a Grist table. Additive only: existing columns are left untouched, never dropped or retyped. Types include Text, Numeric, Int, Bool, Date, DateTime, Choice, ChoiceList, Attachments, and Ref:OtherTable.')]

@@ -5,8 +5,9 @@
     "type": "symfony-bundle",
     "require": {
         "php": "^8.5",
+        "survos/grist-php": "^2.24",
         "survos/kit-bundle": "^2.6",
-        "survos/record-store-bundle": "^2.6",
+        "survos/record-store": "^2.24",
         "symfony/config": "^8.1",
         "symfony/console": "^8.1",
         "symfony/dependency-injection": "^8.1",

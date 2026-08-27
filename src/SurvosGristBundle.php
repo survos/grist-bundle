@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Survos\GristBundle;
 
-use Survos\GristBundle\Service\GristApplicationLocator;
-use Survos\GristBundle\Service\GristAttachmentManager;
-use Survos\GristBundle\Service\GristFormManager;
-use Survos\GristBundle\Service\GristQueryRunner;
-use Survos\GristBundle\Service\GristSchemaManager;
-use Survos\GristBundle\Service\GristWebhookManager;
+use Survos\Grist\Service\GristApplicationLocator;
+use Survos\Grist\Service\GristAttachmentManager;
+use Survos\Grist\Service\GristFormManager;
+use Survos\Grist\Service\GristQueryRunner;
+use Survos\Grist\Service\GristSchemaManager;
+use Survos\Grist\Service\GristWebhookManager;
 use Survos\GristBundle\Tool\AddColumnsTool;
 use Survos\GristBundle\Tool\AttachmentStoreTool;
 use Survos\GristBundle\Tool\DescribeTableTool;
@@ -22,7 +22,7 @@ use Survos\GristBundle\Tool\UpsertRecordsTool;
 use Survos\GristBundle\Tool\UpsertWebhookTool;
 use Survos\Kit\AbstractSurvosBundle;
 use Survos\Kit\SurvosKitBundle;
-use Survos\RecordStoreBundle\SurvosRecordStoreBundle;
+use Survos\RecordStore\SurvosRecordStoreBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Kernel\RequiredBundle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;

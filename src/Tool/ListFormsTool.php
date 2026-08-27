@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Survos\GristBundle\Tool;
 
 use Mcp\Capability\Attribute\McpTool;
-use Survos\GristBundle\Service\GristFormManager;
+use Survos\Grist\Service\GristFormManager;
 use Symfony\AI\Agent\Toolbox\Attribute\AsTool;
 
 #[AsTool('grist_list_forms', 'List forms in a configured Grist application before changing its form design.')]

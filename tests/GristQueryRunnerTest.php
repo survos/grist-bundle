@@ -7,8 +7,8 @@ namespace Survos\GristBundle\Tests;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Survos\GristBundle\Service\GristApplicationLocator;
-use Survos\GristBundle\Service\GristQueryRunner;
+use Survos\Grist\Service\GristApplicationLocator;
+use Survos\Grist\Service\GristQueryRunner;
 
 /**
  * The guard is exercised without a locator on purpose: it must reject a bad
