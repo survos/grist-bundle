@@ -7,7 +7,7 @@
         "php": "^8.5",
         "survos/grist-php": "^2.24",
         "survos/kit-bundle": "^2.6",
-        "survos/record-store": "^2.24",
+        "survos/record-store-bundle": "^2.24",
         "symfony/cache-contracts": "^3.6|^4.0",
         "symfony/config": "^8.1",
         "symfony/console": "^8.1",
