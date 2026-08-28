@@ -8,18 +8,22 @@
         "survos/grist-php": "^2.24",
         "survos/kit-bundle": "^2.6",
         "survos/record-store": "^2.24",
+        "symfony/cache-contracts": "^3.6|^4.0",
         "symfony/config": "^8.1",
         "symfony/console": "^8.1",
         "symfony/dependency-injection": "^8.1",
         "symfony/http-kernel": "^8.1"
     },
     "require-dev": {
+        "api-platform/core": "^4.3",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^13.0",
         "symfony/ai-agent": "^0.4",
+        "symfony/cache": "^8.1",
         "symfony/mcp-bundle": "^0.9"
     },
     "suggest": {
+        "api-platform/core": "Serve Grist tables as API Platform resources (see docs/api-platform.md).",
         "symfony/ai-agent": "Expose Grist agent tools.",
         "symfony/mcp-bundle": "Expose Grist tools over MCP."
     },

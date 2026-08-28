@@ -121,6 +121,38 @@ provides both guards natively — you don't build them.
 validated first: Grist accepts a wrong `watchedColIds` silently and the hook then simply
 never fires, which is close to undebuggable later.
 
+## API Platform
+
+Grist tables as read/write API resources: serializer groups decide what is public, natural keys
+appear in the URIs, and one cached full-table read serves the filtering. Registered only when
+`api-platform/core` is installed.
+
+```php
+#[ApiResource(provider: GristProvider::class, processor: GristProcessor::class)]
+#[GristResource(application: 'chijal', table: 'locations', identifier: 'code',
+                where: ['Status' => ['activo']], order: ['Name'])]
+final class Location { /* #[Groups]-annotated properties */ }
+```
+
+| Docs | |
+|---|---|
+| [Overview and install](docs/api-platform.md) | why this replaces a hand-written proxy; a resource end to end |
+| [Defining a resource](docs/api-platform-resources.md) | `#[GristResource]`, `#[GristColumn]`, groups, natural-key identifiers |
+| [Reading](docs/api-platform-reading.md) | which filters push down to Grist and which do not |
+| [Caching](docs/api-platform-caching.md) | why it is mandatory, and the three ways to invalidate |
+| [Writing](docs/api-platform-writing.md) | the processor, and why this **cannot** be the only write path |
+| [MCP](docs/api-platform-mcp.md) | what would collapse into API Platform's own MCP support |
+
+The three things that surprise people: only the resource's declared `where`/`order` push down
+to Grist and everything else is filtered in PHP against a cached full-table read; a natural key
+containing a dot breaks API Platform's default `{._format}` item route; and API Platform cannot
+be the sole write path, because Grist's own grid is a second one.
+
+```bash
+bin/console grist:api:resources            # which resources are Grist-backed
+bin/console grist:api:refresh [Resource]   # drop the cached reads
+```
+
 ## Console
 
 The same capabilities, for checking what an agent did — and usable in an app that

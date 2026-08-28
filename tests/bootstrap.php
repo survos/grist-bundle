@@ -19,6 +19,12 @@ spl_autoload_register(static function (string $class) use ($packageRoot, $monoRo
         'Survos\\GristBundle\\' => $packageRoot.'/src/',
         'Survos\\RecordStoreBundle\\' => $monoRoot.'/bu/record-store-bundle/src/',
         'Survos\\Kit\\' => $monoRoot.'/bu/kit-bundle/src/',
+        // The libraries this bundle wraps. Without them every test that touches a Grist model
+        // or a record-store value object dies on "class not found" -- and PHPUnit reports that
+        // as the test's own assertion failing, so it reads like a broken bundle rather than a
+        // missing autoload entry.
+        'Survos\\Grist\\' => $monoRoot.'/lib/grist-php/src/',
+        'Survos\\RecordStore\\' => $monoRoot.'/lib/record-store/src/',
     ];
     foreach ($prefixes as $prefix => $directory) {
         if (!str_starts_with($class, $prefix)) {
