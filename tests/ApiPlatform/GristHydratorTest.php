@@ -129,6 +129,86 @@ final class GristHydratorTest extends TestCase
         $this->hydrator->toGristFields($metadata, $object);
     }
 
+    public function testAReferenceTypedAsTheClassHydratesTheWholeResource(): void
+    {
+        $store = InMemoryGristStore::withRows([
+            'Obras' => [[1, ['Code' => 'az1', 'Location' => 5]]],
+            'Locations' => [[5, ['Code' => 'libjo', 'Name' => 'Librería Jovel', 'Status' => 'inactivo']]],
+        ]);
+        $factory = new GristResourceMetadataFactory();
+        $hydrator = new GristHydrator($factory, new GristRecordFetcher($store->registry(), $factory, new ArrayAdapter()));
+
+        $obra = $hydrator->hydrate($factory->create(FixtureNested::class), new Record(['Code' => 'az1', 'Location' => 5], 1));
+
+        // The same column, twice: the key for a client that indexes on it, the object for one
+        // that renders the venue's name without a second request.
+        self::assertSame('libjo', $obra->locationCode);
+        self::assertInstanceOf(FixtureLocation::class, $obra->location);
+        self::assertSame('libjo', $obra->location->code);
+        self::assertSame('Librería Jovel', $obra->location->label);
+    }
+
+    public function testANestedReferenceIgnoresThePublicationRuleOfWhatItPointsAt(): void
+    {
+        // The venue above is inactivo, so it is not *listed*. It is still the venue the work
+        // hangs in, and resolving it to null would corrupt the record rather than hide it.
+        $store = InMemoryGristStore::withRows([
+            'Obras' => [[1, ['Code' => 'az1', 'Location' => 5]]],
+            'Locations' => [[5, ['Code' => 'cora', 'Name' => 'Plaza Mucho Corazon', 'Status' => 'inactivo']]],
+        ]);
+        $factory = new GristResourceMetadataFactory();
+        $hydrator = new GristHydrator($factory, new GristRecordFetcher($store->registry(), $factory, new ArrayAdapter()));
+
+        $obra = $hydrator->hydrate($factory->create(FixtureNested::class), new Record(['Code' => 'az1', 'Location' => 5], 1));
+
+        self::assertNotNull($obra->location);
+        self::assertSame('Plaza Mucho Corazon', $obra->location->label);
+    }
+
+    public function testANestedReferenceToAMissingRowIsNullNotAnEmptyObject(): void
+    {
+        $store = InMemoryGristStore::withRows(['Obras' => [], 'Locations' => []]);
+        $factory = new GristResourceMetadataFactory();
+        $hydrator = new GristHydrator($factory, new GristRecordFetcher($store->registry(), $factory, new ArrayAdapter()));
+
+        $obra = $hydrator->hydrate($factory->create(FixtureNested::class), new Record(['Code' => 'az1', 'Location' => 404], 1));
+
+        self::assertNull($obra->location);
+        self::assertNull($obra->locationCode);
+    }
+
+    public function testASelfReferenceTerminatesInsteadOfHydratingForever(): void
+    {
+        $store = InMemoryGristStore::withRows(['Obras' => [[1, ['Code' => 'az1', 'Parent' => 1]]]]);
+        $factory = new GristResourceMetadataFactory();
+        $hydrator = new GristHydrator($factory, new GristRecordFetcher($store->registry(), $factory, new ArrayAdapter()));
+
+        $obra = $hydrator->hydrate($factory->create(FixtureSelfReference::class), new Record(['Code' => 'az1', 'Parent' => 1], 1));
+
+        // One level, then it stops. A cycle is a legitimate thing for a document to contain;
+        // only hydrating one eagerly and without end is not.
+        self::assertInstanceOf(FixtureSelfReference::class, $obra->parent);
+        self::assertNull($obra->parent->parent);
+    }
+
+    public function testAnObjectReferenceWritesBackAsItsNaturalKey(): void
+    {
+        $store = InMemoryGristStore::withRows([
+            'Obras' => [[1, ['Code' => 'az1', 'Location' => 5]]],
+            'Locations' => [[5, ['Code' => 'libjo', 'Name' => 'Librería Jovel']]],
+        ]);
+        $factory = new GristResourceMetadataFactory();
+        $hydrator = new GristHydrator($factory, new GristRecordFetcher($store->registry(), $factory, new ArrayAdapter()));
+        $metadata = $factory->create(FixtureNested::class);
+
+        $obra = $hydrator->hydrate($metadata, new Record(['Code' => 'az1', 'Location' => 5], 1));
+        $fields = $hydrator->toGristFields($metadata, $obra);
+
+        // Round trip: the key property writes the row id back, and the object property is not
+        // writable, so one column cannot be written twice with two spellings of the same value.
+        self::assertSame(5, $fields['Location']);
+    }
+
     /** @param array<string, mixed> $fields */
     private function hydrate(array $fields): FixtureLocation
     {

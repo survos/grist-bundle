@@ -142,6 +142,39 @@ missing from the app".
 A reference pointing at a row that no longer exists resolves to `null` rather than to the row
 id, and writing a natural key nobody has throws rather than silently pointing at nothing.
 
+### A reference can also be the whole resource
+
+How the property is *typed* decides what a `Ref` column reads as:
+
+```php
+#[GristColumn(name: 'Location', references: Location::class, filterable: true)]
+public ?string $locationCode = null;                    // the natural key
+
+#[GristColumn(name: 'Location', references: Location::class, writable: false)]
+public ?Location $location = null;                      // the whole venue
+```
+
+Both may map the same Grist column — they are two views of one value, and a client that
+indexes on the key usually also renders the label. Without the object form, a list of works
+needs one extra request per row to learn the venue name it could have been handed.
+
+Which fields come back is the nested class's `#[Groups]`, not this property's, so a nested
+view can be much narrower than the standalone one — identity and a label, rather than a
+biography repeated on every row.
+
+Three rules worth knowing:
+
+- **Mark the object form `writable: false`.** One Grist column must not be written twice, once
+  as a key and once as an object. Let the key own the write.
+- **A nested reference ignores the referenced resource's `where`**, for the same reason the
+  identifier map does: a closed venue is still the venue a work hangs in.
+- **A cycle terminates rather than recursing.** A resource that references itself hydrates one
+  level and then stops. A cycle is a legitimate thing for a document to contain; hydrating one
+  eagerly and without end is not.
+
+The index of referenced rows is per-request — the hydrator implements `ResetInterface`, so a
+worker runtime does not hand the first request's view of a table to every request after it.
+
 Both hydration directions live in one class, `GristHydrator`, because they have to agree about
 exactly one thing: a reference is a natural key on the outside and a row id on the inside, and
 the translation has to be reversible or a read-modify-write silently repoints the row.

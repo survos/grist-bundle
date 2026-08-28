@@ -72,6 +72,8 @@ final readonly class GristProcessor implements ProcessorInterface
         // The write went to Grist; the cached read still shows the old row. Drop it now so the
         // response body and the next collection agree, rather than waiting out the TTL.
         $this->fetcher->invalidate($metadata->resourceClass);
+        // The hydrator's per-request index was built from the rows that were just replaced.
+        $this->hydrator->reset();
 
         return $data;
     }
