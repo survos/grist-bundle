@@ -15,7 +15,7 @@
         "symfony/http-kernel": "^8.1"
     },
     "require-dev": {
-        "api-platform/core": "^4.3",
+        "api-platform/core": "^4.3 || ^5.0",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^13.0",
         "symfony/ai-agent": "^0.13",
