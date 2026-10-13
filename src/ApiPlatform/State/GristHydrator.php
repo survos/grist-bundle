@@ -265,22 +265,12 @@ final class GristHydrator implements ResetInterface
                 return 0; // Grist's "no reference".
             }
 
-            return $rowIds[(string) $value] ?? throw new \InvalidArgumentException(sprintf(
-                'No %s has the identifier "%s", so "%s" cannot point at it.',
-                $references,
-                (string) $value,
-                $property->property,
-            ));
+            return $rowIds[(string) $value] ?? throw new \InvalidArgumentException(sprintf('No %s has the identifier "%s", so "%s" cannot point at it.', $references, (string) $value, $property->property));
         }
 
         $ids = ['L'];
         foreach (self::listValue($value) as $code) {
-            $ids[] = $rowIds[(string) $code] ?? throw new \InvalidArgumentException(sprintf(
-                'No %s has the identifier "%s", so "%s" cannot include it.',
-                $references,
-                (string) $code,
-                $property->property,
-            ));
+            $ids[] = $rowIds[(string) $code] ?? throw new \InvalidArgumentException(sprintf('No %s has the identifier "%s", so "%s" cannot include it.', $references, (string) $code, $property->property));
         }
 
         return $ids;
@@ -323,10 +313,6 @@ final class GristHydrator implements ResetInterface
             return null;
         }
 
-        throw new \LogicException(sprintf(
-            'Constructor parameter "$%s" of %s maps to no public property, so the Grist provider cannot supply it.',
-            $parameter->getName(),
-            $resourceClass,
-        ));
+        throw new \LogicException(sprintf('Constructor parameter "$%s" of %s maps to no public property, so the Grist provider cannot supply it.', $parameter->getName(), $resourceClass));
     }
 }

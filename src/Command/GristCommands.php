@@ -70,7 +70,7 @@ final readonly class GristCommands
         SymfonyStyle $io,
         #[Argument('Configured application name')] string $application,
         #[Argument('A SELECT statement; use ? placeholders')] string $sql,
-        /** @var list<string> */
+        /* @var list<string> */
         #[Option('Bind a value to the next ? placeholder (repeatable)', name: 'arg')] array $args = [],
         #[Option('Emit JSON')] bool $json = false,
     ): int {

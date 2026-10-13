@@ -45,10 +45,7 @@ final readonly class GristProcessor implements ProcessorInterface
             // GristClient has no delete, and adding one here would be the wrong place to
             // decide that a curated row may vanish over HTTP. Retire rows with a status
             // column and a #[GristResource] `where`, the way Locations does.
-            throw new UnsupportedRecordStoreOperation(sprintf(
-                'Deleting %s over the API is not supported: rows are retired in Grist, not removed by a caller.',
-                $data::class,
-            ));
+            throw new UnsupportedRecordStoreOperation(sprintf('Deleting %s over the API is not supported: rows are retired in Grist, not removed by a caller.', $data::class));
         }
 
         $metadata = $this->factory->create($data::class);
@@ -56,11 +53,7 @@ final readonly class GristProcessor implements ProcessorInterface
         $key = $fields[$metadata->identifier->column] ?? null;
 
         if (!is_scalar($key) || '' === trim((string) $key)) {
-            throw new \InvalidArgumentException(sprintf(
-                'A %s needs a "%s" before it can be written: rows are matched on their natural key, which the client supplies rather than the server inventing one.',
-                $data::class,
-                $metadata->grist->identifier,
-            ));
+            throw new \InvalidArgumentException(sprintf('A %s needs a "%s" before it can be written: rows are matched on their natural key, which the client supplies rather than the server inventing one.', $data::class, $metadata->grist->identifier));
         }
 
         $table = $this->fetcher->table($metadata);

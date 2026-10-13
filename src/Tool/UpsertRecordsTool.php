@@ -17,8 +17,8 @@ final readonly class UpsertRecordsTool
     }
 
     /**
-     * @param string                          $keyColumn the natural key to match on, e.g. a Code column
-     * @param list<array<string,mixed>>       $records   each must contain $keyColumn
+     * @param string                    $keyColumn the natural key to match on, e.g. a Code column
+     * @param list<array<string,mixed>> $records   each must contain $keyColumn
      */
     public function __invoke(string $application, string $table, string $keyColumn, array $records): string
     {

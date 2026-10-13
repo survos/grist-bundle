@@ -49,7 +49,7 @@ final readonly class GristRecordFetcher
      * Every row of the resource's table, narrowed by a declared `where`.
      *
      * @param array<string, list<bool|float|int|string|null>>|null $where null uses the resource's own;
-     *                                                                   [] deliberately narrows nothing
+     *                                                                    [] deliberately narrows nothing
      *
      * @return list<Record>
      */
@@ -150,13 +150,7 @@ final readonly class GristRecordFetcher
         ));
 
         if (count($page->records) > $maxRows) {
-            throw new \OverflowException(sprintf(
-                'Grist table "%s.%s" holds more than %d rows, which is more than the API Platform provider reads into memory. '
-                .'Narrow it with a #[GristResource] `where`, put it behind a Grist view, or query it through GristQueryRunner instead of raising maxRows.',
-                $metadata->grist->application,
-                $metadata->grist->table,
-                $maxRows,
-            ));
+            throw new \OverflowException(sprintf('Grist table "%s.%s" holds more than %d rows, which is more than the API Platform provider reads into memory. Narrow it with a #[GristResource] `where`, put it behind a Grist view, or query it through GristQueryRunner instead of raising maxRows.', $metadata->grist->application, $metadata->grist->table, $maxRows));
         }
 
         $records = [];

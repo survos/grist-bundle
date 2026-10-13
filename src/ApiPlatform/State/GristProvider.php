@@ -94,7 +94,7 @@ final readonly class GristProvider implements ProviderInterface
     /**
      * The row whose identifier column holds the URI's natural key.
      *
-     * @param list<Record> $records
+     * @param list<Record>         $records
      * @param array<string, mixed> $uriVariables
      */
     private function find(GristResourceMetadata $metadata, array $records, array $uriVariables): ?Record
@@ -119,7 +119,7 @@ final readonly class GristProvider implements ProviderInterface
      * Only properties marked `filterable` participate; an unknown or unmarked parameter is
      * ignored rather than mistaken for a column, so a typo cannot widen a collection.
      *
-     * @param list<Record> $records
+     * @param list<Record>            $records
      * @param array<array-key, mixed> $filters a query string yields int keys for numeric names
      *
      * @return list<Record>
@@ -176,7 +176,7 @@ final readonly class GristProvider implements ProviderInterface
     }
 
     /**
-     * @param list<Record> $records
+     * @param list<Record>            $records
      * @param array<array-key, mixed> $order
      *
      * @return list<Record>

@@ -69,7 +69,7 @@ final class GristPaginatorTest extends TestCase
     private static function paginator(int $records, int $total, int $page, int $perPage, ?int $nextOffset = null): GristPaginator
     {
         return new GristPaginator(
-            new RecordPage(array_map(static fn (int $i): Record => new Record(["Code" => "c$i"], $i), $records < 1 ? [] : range(1, $records)), $total, $nextOffset),
+            new RecordPage(array_map(static fn (int $i): Record => new Record(['Code' => "c$i"], $i), $records < 1 ? [] : range(1, $records)), $total, $nextOffset),
             (float) $page,
             (float) $perPage,
             static fn (Record $record): object => (object) $record->fields,

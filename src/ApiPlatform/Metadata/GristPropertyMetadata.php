@@ -10,7 +10,7 @@ namespace Survos\GristBundle\ApiPlatform\Metadata;
 final readonly class GristPropertyMetadata
 {
     /**
-     * @param class-string|null $references
+     * @param class-string|null              $references
      * @param class-string<\BackedEnum>|null $enum
      */
     public function __construct(

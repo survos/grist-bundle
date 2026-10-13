@@ -31,10 +31,10 @@ use Survos\GristBundle\Tool\UpsertWebhookTool;
 use Survos\Kit\AbstractSurvosBundle;
 use Survos\Kit\SurvosKitBundle;
 use Survos\RecordStoreBundle\SurvosRecordStoreBundle;
+use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Kernel\RequiredBundle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -146,5 +146,4 @@ final class SurvosGristBundle extends AbstractSurvosBundle
 
         $s->set(GristApiCommands::class);
     }
-
 }

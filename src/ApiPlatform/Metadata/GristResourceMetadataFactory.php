@@ -24,10 +24,7 @@ final class GristResourceMetadataFactory
 
         $reflection = new \ReflectionClass($resourceClass);
         $attribute = $reflection->getAttributes(GristResource::class)[0]
-            ?? throw new \InvalidArgumentException(sprintf(
-                'Class "%s" is served by the Grist state provider but carries no #[GristResource].',
-                $resourceClass,
-            ));
+            ?? throw new \InvalidArgumentException(sprintf('Class "%s" is served by the Grist state provider but carries no #[GristResource].', $resourceClass));
 
         $grist = $attribute->newInstance();
         $properties = [];
@@ -38,11 +35,7 @@ final class GristResourceMetadataFactory
             $properties[$property->getName()] = self::describe($property);
         }
 
-        $identifier = $properties[$grist->identifier] ?? throw new \InvalidArgumentException(sprintf(
-            'Class "%s" declares "%s" as its Grist identifier, but has no such public property.',
-            $resourceClass,
-            $grist->identifier,
-        ));
+        $identifier = $properties[$grist->identifier] ?? throw new \InvalidArgumentException(sprintf('Class "%s" declares "%s" as its Grist identifier, but has no such public property.', $resourceClass, $grist->identifier));
 
         return $this->metadata[$resourceClass] = new GristResourceMetadata($resourceClass, $grist, $properties, $identifier);
     }

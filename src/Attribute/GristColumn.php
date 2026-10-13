@@ -15,15 +15,15 @@ namespace Survos\GristBundle\Attribute;
 final readonly class GristColumn
 {
     /**
-     * @param string|null $name       Grist column id; defaults to `ucfirst($property)`
+     * @param string|null       $name       Grist column id; defaults to `ucfirst($property)`
      * @param class-string|null $references another #[GristResource] class. A `Ref` column then
-     *                            reads as that class's natural key instead of a row id, and a
-     *                            `RefList` as a list of them. This is what keeps row ids out of
-     *                            the payload entirely.
-     * @param bool $filterable    expose as a collection query parameter
-     * @param bool $sortable      expose to the `order` query parameter
-     * @param bool $writable      false for formula and computed columns. Grist rejects writes to
-     *                            them, and a processor that sends one fails the whole upsert.
+     *                                      reads as that class's natural key instead of a row id, and a
+     *                                      `RefList` as a list of them. This is what keeps row ids out of
+     *                                      the payload entirely.
+     * @param bool              $filterable expose as a collection query parameter
+     * @param bool              $sortable   expose to the `order` query parameter
+     * @param bool              $writable   false for formula and computed columns. Grist rejects writes to
+     *                                      them, and a processor that sends one fails the whole upsert.
      */
     public function __construct(
         public ?string $name = null,

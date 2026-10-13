@@ -9,8 +9,8 @@ use Survos\GristBundle\Attribute\GristResource;
 final readonly class GristResourceMetadata
 {
     /**
-     * @param class-string $resourceClass
-     * @param array<string, GristPropertyMetadata> $properties keyed by property name
+     * @param class-string                         $resourceClass
+     * @param array<string, GristPropertyMetadata> $properties    keyed by property name
      */
     public function __construct(
         public string $resourceClass,

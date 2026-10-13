@@ -20,24 +20,24 @@ namespace Survos\GristBundle\Attribute;
 final readonly class GristResource
 {
     /**
-     * @param string $application the record-store application name, as configured under
-     *                            survos_record_store.applications -- not the document id
-     * @param string $table       the table name as configured under that application's `tables`
-     * @param string $identifier  the property (not the Grist column) holding the natural key.
-     *                            Row ids are deliberately not usable here: a Grist row id means
-     *                            nothing outside the document and does not survive a rebuild,
-     *                            so /locations/bioes, never /locations/3.
-     * @param array<string, list<bool|float|int|string|null>> $where a filter applied to every
-     *                            read of this table, pushed down to Grist. This is a publication
-     *                            rule, not a caller's choice: rows excluded here never enter the
-     *                            cache and cannot be reached by omitting a query parameter.
-     * @param list<string> $order default sort, pushed down to Grist. Grist's own syntax:
-     *                            `Name` ascending, `-Year` descending. Column ids, not properties.
-     * @param int|null $cacheTtl  seconds; null uses the bundle default. Grist is a live
-     *                            third-party dependency on the request path, so this is not
-     *                            tuning -- see docs/api-platform.md.
-     * @param int|null $maxRows   refuse to serve rather than silently truncate. null uses the
-     *                            bundle default.
+     * @param string                                          $application the record-store application name, as configured under
+     *                                                                     survos_record_store.applications -- not the document id
+     * @param string                                          $table       the table name as configured under that application's `tables`
+     * @param string                                          $identifier  the property (not the Grist column) holding the natural key.
+     *                                                                     Row ids are deliberately not usable here: a Grist row id means
+     *                                                                     nothing outside the document and does not survive a rebuild,
+     *                                                                     so /locations/bioes, never /locations/3.
+     * @param array<string, list<bool|float|int|string|null>> $where       a filter applied to every
+     *                                                                     read of this table, pushed down to Grist. This is a publication
+     *                                                                     rule, not a caller's choice: rows excluded here never enter the
+     *                                                                     cache and cannot be reached by omitting a query parameter.
+     * @param list<string>                                    $order       default sort, pushed down to Grist. Grist's own syntax:
+     *                                                                     `Name` ascending, `-Year` descending. Column ids, not properties.
+     * @param int|null                                        $cacheTtl    seconds; null uses the bundle default. Grist is a live
+     *                                                                     third-party dependency on the request path, so this is not
+     *                                                                     tuning -- see docs/api-platform.md.
+     * @param int|null                                        $maxRows     refuse to serve rather than silently truncate. null uses the
+     *                                                                     bundle default.
      */
     public function __construct(
         public string $application,

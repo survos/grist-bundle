@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Survos\GristBundle\ApiPlatform;
 
 use ApiPlatform\Metadata\Resource\Factory\ResourceNameCollectionFactoryInterface;
+use Survos\Grist\Service\GristApplicationLocator;
 use Survos\GristBundle\ApiPlatform\Metadata\GristResourceMetadataFactory;
 use Survos\GristBundle\ApiPlatform\State\GristRecordFetcher;
 use Survos\GristBundle\Attribute\GristResource;
-use Survos\Grist\Service\GristApplicationLocator;
 use Symfony\Component\Console\Attribute\Argument;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Attribute\Option;

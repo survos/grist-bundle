@@ -6,7 +6,6 @@ namespace Survos\GristBundle\Tests\ApiPlatform;
 
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\Pagination;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
