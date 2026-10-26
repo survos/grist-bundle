@@ -18,9 +18,9 @@
         "api-platform/core": "^5.0",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^13.0",
-        "symfony/ai-agent": "^0.15",
+        "symfony/ai-agent": "^1.0.0-beta1",
         "symfony/cache": "^8.1",
-        "symfony/mcp-bundle": "^0.15"
+        "symfony/mcp-bundle": "^1.0.0-beta1"
     },
     "suggest": {
         "api-platform/core": "Serve Grist tables as API Platform resources (see docs/api-platform.md).",
